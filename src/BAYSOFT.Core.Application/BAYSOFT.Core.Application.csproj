@@ -14,4 +14,15 @@
     <ProjectReference Include="..\BAYSOFT.Core.Domain.Interfaces\BAYSOFT.Core.Domain.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MinecraftTraders\Accepts\Commands\" />
+    <Folder Include="MinecraftTraders\Items\Commands\" />
+    <Folder Include="MinecraftTraders\Offers\Commands\" />
+    <Folder Include="MinecraftTraders\ProfessionItems\Commands\" />
+    <Folder Include="MinecraftTraders\Trades\Commands\" />
+    <Folder Include="MinecraftTraders\Professions\Commands\" />
+    <Folder Include="MinecraftTraders\Professions\Queries\GetProfessionByKey\" />
+    <Folder Include="MinecraftTraders\Villagers\Commands\" />
+  </ItemGroup>
+
 </Project>

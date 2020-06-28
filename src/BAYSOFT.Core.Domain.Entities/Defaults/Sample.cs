@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BAYSOFT.Core.Domain.Entities.Defaults
+﻿namespace BAYSOFT.Core.Domain.Entities.Defaults
 {
     public class Sample
     {

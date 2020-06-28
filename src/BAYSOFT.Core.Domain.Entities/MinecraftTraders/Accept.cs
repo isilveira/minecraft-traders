@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace BAYSOFT.Core.Domain.Entities.MinecraftTraders
+﻿namespace BAYSOFT.Core.Domain.Entities.MinecraftTraders
 {
     public class Accept
     {
