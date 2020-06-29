@@ -26,6 +26,7 @@ namespace BAYSOFT.Middleware
 
             await context.SeedSamples(seedsMultiplier * 10, cancellationToken);
             await context.SeedProfessions(cancellationToken);
+            await context.SeedVillagers(cancellationToken);
         }
 
         internal static async Task SeedSamples(this IDefaultDbContext context, int inserts, CancellationToken cancellationToken)
@@ -75,6 +76,8 @@ namespace BAYSOFT.Middleware
         {
             var total = await context.Professions.CountAsync(cancellationToken);
 
+            if (total > 0) return;
+
             var professions = new List<Profession>();
 
             professions.Add(new Profession { Order = 1,  Name = "Unemployed",       Default = true,  Description = "No trades until employed." });
@@ -96,6 +99,7 @@ namespace BAYSOFT.Middleware
             foreach (var profession in professions.OrderBy(x=>x.Order))
             {
                 await context.Professions.AddAsync(profession, cancellationToken);
+
                 await context.SaveChangesAsync(cancellationToken);
             }
 
@@ -104,6 +108,55 @@ namespace BAYSOFT.Middleware
             Log.Debug($"{total} professions alread saved.");
 
             Log.Debug("Professions data seed completed.");
+        }
+
+        internal static async Task SeedVillagers(this IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var total = await context.Villagers.CountAsync(cancellationToken);
+
+            if (total > 0) return;
+
+            var villagers = new List<Villager>();
+
+            var librarian = await context.Professions.Where(x => x.Name == "Librarian").SingleOrDefaultAsync(cancellationToken);
+
+            villagers.Add(new Villager { Name = "Loja 01", Description = "Loja 01", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 02", Description = "Loja 02", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 03", Description = "Loja 03", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 04", Description = "Loja 04", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 05", Description = "Loja 05", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 06", Description = "Loja 06", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 07", Description = "Loja 07", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 08", Description = "Loja 08", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 09", Description = "Loja 09", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 10", Description = "Loja 10", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 11", Description = "Loja 11", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 12", Description = "Loja 12", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 13", Description = "Loja 13", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 14", Description = "Loja 14", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 15", Description = "Loja 15", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 16", Description = "Loja 16", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 17", Description = "Loja 17", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 18", Description = "Loja 18", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 19", Description = "Loja 19", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 20", Description = "Loja 20", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 21", Description = "Loja 21", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 22", Description = "Loja 22", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 23", Description = "Loja 23", ProfessionID = librarian.ProfessionID });
+            villagers.Add(new Villager { Name = "Loja 24", Description = "Loja 24", ProfessionID = librarian.ProfessionID });
+
+            foreach (var villager in villagers)
+            {
+                await context.Villagers.AddAsync(villager, cancellationToken);
+
+                await context.SaveChangesAsync(cancellationToken);
+            }
+
+            total = await context.Villagers.CountAsync(cancellationToken);
+
+            Log.Debug($"{total} villagers alread saved.");
+
+            Log.Debug("Villager data seed completed.");
         }
     }
 }
