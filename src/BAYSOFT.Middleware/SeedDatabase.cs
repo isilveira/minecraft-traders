@@ -88,7 +88,7 @@ namespace BAYSOFT.Middleware
             professions.Add(CreateUnemployed(context));
             professions.Add(await CreateFarmerAsync(context, cancellationToken));
             professions.Add(await CreateFishermanAsync(context, cancellationToken));
-            professions.Add(CreateShepherd(context));
+            professions.Add(await CreateShepherdAsync(context, cancellationToken));
             professions.Add(CreateFletcher(context));
             professions.Add(CreateCleric(context));
             professions.Add(CreateWeaponsmith(context));
@@ -381,7 +381,7 @@ namespace BAYSOFT.Middleware
         #endregion
 
         #region Create profession farmer
-        private static async Task<Profession> CreateFarmerAsync(IDefaultDbContext context, CancellationToken cancellationToken)
+        private static async Task<Profession> CreateFarmerAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var farmer = new Profession
             {
@@ -417,7 +417,7 @@ namespace BAYSOFT.Middleware
         #endregion
 
         #region Create profession fisherman
-        private static async Task<Profession> CreateFishermanAsync(IDefaultDbContext context, CancellationToken cancellationToken)
+        private static async Task<Profession> CreateFishermanAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken)
         {
             var fisherman = new Profession
             {
@@ -451,7 +451,7 @@ namespace BAYSOFT.Middleware
         #endregion
 
         #region Create profession shepherd
-        private static Profession CreateShepherd(IDefaultDbContext context)
+        private static async Task<Profession> CreateShepherdAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var shepherd = new Profession
             {
@@ -461,12 +461,26 @@ namespace BAYSOFT.Middleware
                 Description = "Trades shears, wool, dyes, paintings and beds."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "shears");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "wool", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "carpet", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, " bed", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "banner", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "painting");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "dye", false);
+
+            professionItems.ForEach(professionItem => shepherd.ProfessionItems.Add(professionItem));
+
             return shepherd;
         }
         #endregion
 
         #region Create profession fletcher
-        private static Profession CreateFletcher(IDefaultDbContext context)
+        private static Profession CreateFletcher(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var fletcher = new Profession
             {
@@ -635,7 +649,7 @@ namespace BAYSOFT.Middleware
                 (equals && x.Name.ToLower().Equals(itemName.ToLower()))
                 || (!equals && x.Name.ToLower().Contains(itemName.ToLower()))
             ).ToListAsync(cancellationToken);
-            
+
             if (items != null && items.Count > 0)
             {
                 items.ForEach(item => professionItems.Add(new ProfessionItem { ItemID = item.ItemID }));
