@@ -442,7 +442,6 @@ namespace BAYSOFT.Middleware
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw salmon");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "tropical fish");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pufferfish");
-            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pufferfish");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "boat", false);
 
             professionItems.ForEach(professionItem => fisherman.ProfessionItems.Add(professionItem));
