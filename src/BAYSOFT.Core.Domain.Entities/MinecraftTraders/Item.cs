@@ -6,6 +6,7 @@ namespace BAYSOFT.Core.Domain.Entities.MinecraftTraders
     {
         public int ItemID { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         public string Description { get; set; }
         public ICollection<Accept> Accepts { get; set; }
         public ICollection<Offer> Offers { get; set; }
