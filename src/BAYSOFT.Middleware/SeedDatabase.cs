@@ -89,16 +89,16 @@ namespace BAYSOFT.Middleware
             professions.Add(await CreateFarmerAsync(context, cancellationToken));
             professions.Add(await CreateFishermanAsync(context, cancellationToken));
             professions.Add(await CreateShepherdAsync(context, cancellationToken));
-            professions.Add(CreateFletcher(context));
-            professions.Add(CreateCleric(context));
-            professions.Add(CreateWeaponsmith(context));
-            professions.Add(CreateArmorer(context));
-            professions.Add(CreateToolsmith(context));
-            professions.Add(CreateLibrarian(context));
-            professions.Add(CreateCartographer(context));
-            professions.Add(CreateLeatherworker(context));
-            professions.Add(CreateButcher(context));
-            professions.Add(CreateMason(context));
+            professions.Add(await CreateFletcherAsync(context, cancellationToken));
+            professions.Add(await CreateClericAsync(context, cancellationToken));
+            professions.Add(await CreateWeaponsmithAsync(context, cancellationToken));
+            professions.Add(await CreateArmorerAsync(context, cancellationToken));
+            professions.Add(await CreateToolsmithAsync(context, cancellationToken));
+            professions.Add(await CreateLibrarianAsync(context, cancellationToken));
+            professions.Add(await CreateCartographerAsync(context, cancellationToken));
+            professions.Add(await CreateLeatherworkerAsync(context, cancellationToken));
+            professions.Add(await CreateButcherAsync(context, cancellationToken));
+            professions.Add(await CreateMasonAsync(context, cancellationToken));
             professions.Add(CreateNitwit(context));
 
             foreach (var profession in professions.OrderBy(x => x.Order))
@@ -417,7 +417,7 @@ namespace BAYSOFT.Middleware
         #endregion
 
         #region Create profession fisherman
-        private static async Task<Profession> CreateFishermanAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken)
+        private static async Task<Profession> CreateFishermanAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var fisherman = new Profession
             {
@@ -480,7 +480,7 @@ namespace BAYSOFT.Middleware
         #endregion
 
         #region Create profession fletcher
-        private static Profession CreateFletcher(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
+        private static async Task<Profession> CreateFletcherAsync(IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var fletcher = new Profession
             {
@@ -490,12 +490,32 @@ namespace BAYSOFT.Middleware
                 Description = "Trades bows, crossbows, all types of arrows (except luck) and archery ingredients."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "arrow");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bow");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "crossbow");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted bow");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted crowssbow");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "tipped arrow");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stick");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "gravel");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "string");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "feather");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "tripwire hook");
+
+            professionItems.ForEach(professionItem => fletcher.ProfessionItems.Add(professionItem));
+
             return fletcher;
         }
         #endregion
 
         #region Create profession cleric
-        private static Profession CreateCleric(IDefaultDbContext context)
+        private static async Task<Profession> CreateClericAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var cleric = new Profession
             {
@@ -505,12 +525,30 @@ namespace BAYSOFT.Middleware
                 Description = "Trades magic items like ender pearls, redstone dust, and enchanting or potions ingredients."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "redstone dust");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "lapis lazuli");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "glowstone dust");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "ender pearl");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bottle o' enchanting");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "rotten flesh");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "golden ingot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "rabbit's foot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "scute");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "glass bottle");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "nether wart");
+
+            professionItems.ForEach(professionItem => cleric.ProfessionItems.Add(professionItem));
+
             return cleric;
         }
         #endregion
 
         #region Create profession weaponsmith
-        private static Profession CreateWeaponsmith(IDefaultDbContext context)
+        private static async Task<Profession> CreateWeaponsmithAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var weaponsmith = new Profession
             {
@@ -520,12 +558,29 @@ namespace BAYSOFT.Middleware
                 Description = "Trades minerals, bells and enchanted melee weapons."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron axe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted iron sword");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bell");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond axe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond sword");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coal");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron ingot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond");
+
+            professionItems.ForEach(professionItem => weaponsmith.ProfessionItems.Add(professionItem));
+
             return weaponsmith;
         }
         #endregion
 
         #region Create profession armorer
-        private static Profession CreateArmorer(IDefaultDbContext context)
+        private static async Task<Profession> CreateArmorerAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var armorer = new Profession
             {
@@ -535,12 +590,39 @@ namespace BAYSOFT.Middleware
                 Description = "Trades foundry items and sells chain, iron and enchanted diamond armor tiers."
             };
 
+
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron helmet");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron chestplate");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron leggings");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron boots");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bell");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "chainmail leggings");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "chainmail boots");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "chainmail helmet");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "chainmail chestplate");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "shield");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond leggings");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond boots");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond helmet");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted diamond chestplate");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coal");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron ingot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "lava bucket");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond");
+
+            professionItems.ForEach(professionItem => armorer.ProfessionItems.Add(professionItem));
+
             return armorer;
         }
         #endregion
 
         #region Create profession toolsmith
-        private static Profession CreateToolsmith(IDefaultDbContext context)
+        private static async Task<Profession> CreateToolsmithAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var toolsmith = new Profession
             {
@@ -550,12 +632,36 @@ namespace BAYSOFT.Middleware
                 Description = "Trades minerals, bells and harvest tools."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stone axe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stone pickaxe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stone shovel");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stone hoe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bell");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted iron axe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted iron pickaxe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted iron shovel");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond hoe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond axe");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond shovel");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond pickaxe");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coal");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "iron ingot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diamond");
+
+            professionItems.ForEach(professionItem => toolsmith.ProfessionItems.Add(professionItem));
+
             return toolsmith;
         }
         #endregion
 
         #region Create profession librarian
-        private static Profession CreateLibrarian(IDefaultDbContext context)
+        private static async Task<Profession> CreateLibrarianAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var librarian = new Profession
             {
@@ -565,12 +671,31 @@ namespace BAYSOFT.Middleware
                 Description = "Trades enchanted books, clocks, compasses, name tags, glass, ink sacs, lanterns, and book and quills."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bookshelf");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted book", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "lantern");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "glass");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "compass");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "clock");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "name tag");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "paper");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "book");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "ink sac");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "book and quill");
+
+            professionItems.ForEach(professionItem => librarian.ProfessionItems.Add(professionItem));
+
             return librarian;
         }
         #endregion
 
         #region Create profession cartographer
-        private static Profession CreateCartographer(IDefaultDbContext context)
+        private static async Task<Profession> CreateCartographerAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var cartographer = new Profession
             {
@@ -580,12 +705,28 @@ namespace BAYSOFT.Middleware
                 Description = "Trades banners, compasses, banner patterns, papers and various maps, including explorer maps."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "empty map");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "ocean explorer map");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "woodland explorer map");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "item frame");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "banner", false);
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "paper");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "glass pane");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "compass");
+
+            professionItems.ForEach(professionItem => cartographer.ProfessionItems.Add(professionItem));
+
             return cartographer;
         }
         #endregion
 
         #region Create profession leatherworker
-        private static Profession CreateLeatherworker(IDefaultDbContext context)
+        private static async Task<Profession> CreateLeatherworkerAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var leatherwork = new Profession
             {
@@ -595,12 +736,31 @@ namespace BAYSOFT.Middleware
                 Description = "Trades scutes, rabbit hide, and leather-related items."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather pants");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather tunic");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather cap");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather boots");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather horse armor");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather cap");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "saddle");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "rabbit hide");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "scute");
+
+            professionItems.ForEach(professionItem => leatherwork.ProfessionItems.Add(professionItem));
+
             return leatherwork;
         }
         #endregion
 
         #region Create profession butcher
-        private static Profession CreateButcher(IDefaultDbContext context)
+        private static async Task<Profession> CreateButcherAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var butcher = new Profession
             {
@@ -610,12 +770,34 @@ namespace BAYSOFT.Middleware
                 Description = "Trades meats, sweet berries, rabbit stew, and dried kelp blocks."
             };
 
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "rabbit stew");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coocked rabbit");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coocked chicken");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coocked porkchop");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coocked mutton");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coocked beef");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw chicken");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw rabbit");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw porkchop");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coal");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw beef");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw mutton");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "dried kelp block");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "sweet berries");
+
+            professionItems.ForEach(professionItem => butcher.ProfessionItems.Add(professionItem));
+
             return butcher;
         }
         #endregion
 
         #region Create profession mason
-        private static Profession CreateMason(IDefaultDbContext context)
+        private static async Task<Profession> CreateMasonAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var mason = new Profession
             {
@@ -624,6 +806,26 @@ namespace BAYSOFT.Middleware
                 Default = false,
                 Description = "Trades polished stones, terracotta, clay, glazed terracotta and quartz."
             };
+
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "brick");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "chiseled stone bricks");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "polished stone", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "terracotta", false);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "block of quartz");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "quartz pillar");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "clay");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stone");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "granite");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "andesite");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "diorite");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "nether quartz");
+
+            professionItems.ForEach(professionItem => mason.ProfessionItems.Add(professionItem));
 
             return mason;
         }
