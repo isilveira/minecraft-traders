@@ -10,6 +10,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -86,7 +87,7 @@ namespace BAYSOFT.Middleware
 
             professions.Add(CreateUnemployed(context));
             professions.Add(await CreateFarmerAsync(context, cancellationToken));
-            professions.Add(CreateFisherman(context));
+            professions.Add(await CreateFishermanAsync(context, cancellationToken));
             professions.Add(CreateShepherd(context));
             professions.Add(CreateFletcher(context));
             professions.Add(CreateCleric(context));
@@ -390,45 +391,33 @@ namespace BAYSOFT.Middleware
                 Description = "Trades crops and natural foods."
             };
 
-            var emerald = await context.Items.Where(x => x.Name.ToLower().Equals("emerald")).SingleOrDefaultAsync(cancellationToken);
-            var bread = await context.Items.Where(x => x.Name.ToLower().Equals("bread")).SingleOrDefaultAsync(cancellationToken);
-            var pumpkin_pie = await context.Items.Where(x => x.Name.ToLower().Equals("pumpkin pie")).SingleOrDefaultAsync(cancellationToken);
-            var apple = await context.Items.Where(x => x.Name.ToLower().Equals("apple")).SingleOrDefaultAsync(cancellationToken);
-            var cookie = await context.Items.Where(x => x.Name.ToLower().Equals("cookie")).SingleOrDefaultAsync(cancellationToken);
-            var suspicious_stew = await context.Items.Where(x => x.Name.ToLower().Equals("suspicious stew")).SingleOrDefaultAsync(cancellationToken);
-            var cake = await context.Items.Where(x => x.Name.ToLower().Equals("cake")).SingleOrDefaultAsync(cancellationToken);
-            var golden_carrot = await context.Items.Where(x => x.Name.ToLower().Equals("golden carrot")).SingleOrDefaultAsync(cancellationToken);
-            var glistering_melon_slice = await context.Items.Where(x => x.Name.ToLower().Equals("glistering melon slice")).SingleOrDefaultAsync(cancellationToken);
+            var professionItems = new List<ProfessionItem>();
 
-            var wheat = await context.Items.Where(x => x.Name.ToLower().Equals("wheat")).SingleOrDefaultAsync(cancellationToken);
-            var potato = await context.Items.Where(x => x.Name.ToLower().Equals("potato")).SingleOrDefaultAsync(cancellationToken);
-            var carrot = await context.Items.Where(x => x.Name.ToLower().Equals("carrot")).SingleOrDefaultAsync(cancellationToken);
-            var beetroot = await context.Items.Where(x => x.Name.ToLower().Equals("beetroot")).SingleOrDefaultAsync(cancellationToken);
-            var pumpkin = await context.Items.Where(x => x.Name.ToLower().Equals("pumpkin")).SingleOrDefaultAsync(cancellationToken);
-            var melon = await context.Items.Where(x => x.Name.ToLower().Equals("melon")).SingleOrDefaultAsync(cancellationToken);
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bread");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pumpkin pie");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "apple");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "cookie");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "suspicious stew");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "cake");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "golden carrot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "glistering melon slice");
 
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = emerald.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = bread.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = pumpkin_pie.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = apple.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = cookie.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = suspicious_stew.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = cake.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = golden_carrot.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = glistering_melon_slice.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = wheat.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = potato.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = carrot.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = beetroot.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = pumpkin.ItemID });
-            farmer.ProfessionItems.Add(new ProfessionItem { ItemID = melon.ItemID });
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "wheat");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "potato");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "carrot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "beetroot");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pumpkin");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "melon");
+
+            professionItems.ForEach(professionItem => farmer.ProfessionItems.Add(professionItem));
 
             return farmer;
         }
         #endregion
 
         #region Create profession fisherman
-        private static Profession CreateFisherman(IDefaultDbContext context)
+        private static async Task<Profession> CreateFishermanAsync(IDefaultDbContext context, CancellationToken cancellationToken)
         {
             var fisherman = new Profession
             {
@@ -437,6 +426,26 @@ namespace BAYSOFT.Middleware
                 Default = false,
                 Description = "Trades campfires and fishing items."
             };
+
+            var professionItems = new List<ProfessionItem>();
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "emerald");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "bucket of cod");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "cooked cod");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "campfire");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "cooked salmon");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "enchanted fishing rod");
+
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "string");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "coal");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw cod");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "raw salmon");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "tropical fish");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pufferfish");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "pufferfish");
+            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "boat", false);
+
+            professionItems.ForEach(professionItem => fisherman.ProfessionItems.Add(professionItem));
 
             return fisherman;
         }
@@ -620,7 +629,20 @@ namespace BAYSOFT.Middleware
 
             return nitwit;
         }
-        #endregion 
+        #endregion
+        private static async Task CreateProfessionItemAsync(IDefaultDbContext context, CancellationToken cancellationToken, List<ProfessionItem> professionItems, string itemName, bool equals = true)
+        {
+            var items = await context.Items.Where(x =>
+                (equals && x.Name.ToLower().Equals(itemName.ToLower()))
+                || (!equals && x.Name.ToLower().Contains(itemName.ToLower()))
+            ).ToListAsync(cancellationToken);
+            
+            if (items != null && items.Count > 0)
+            {
+                items.ForEach(item => professionItems.Add(new ProfessionItem { ItemID = item.ItemID }));
+            }
+
+        }
         #endregion
     }
 }
