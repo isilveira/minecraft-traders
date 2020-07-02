@@ -1,4 +1,5 @@
-﻿using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.PatchVillager;
+﻿using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.DeleteVillager;
+using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.PatchVillager;
 using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.PostVillager;
 using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.PutVillager;
 using BAYSOFT.Core.Application.MinecraftTraders.Villagers.Queries.GetVillagerByKey;
@@ -33,6 +34,11 @@ namespace BAYSOFT.Presentations.WebAPI.Resources
         }
         [HttpPatch("{villagerid}")]
         public async Task<ActionResult<PatchVillagerCommandResponse>> Patch(PatchVillagerCommand command, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Send(command, cancellationToken);
+        }
+        [HttpDelete("{villagerid}")]
+        public async Task<ActionResult<DeleteVillagerCommandResponse>> Delete(DeleteVillagerCommand command, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Send(command, cancellationToken);
         }

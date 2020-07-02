@@ -27,17 +27,17 @@ namespace BAYSOFT.Presentations.WebAPI.Resources
         {
             return await Send(command, cancellationToken);
         }
-        [HttpPut]
+        [HttpPut("{sampleid}")]
         public async Task<ActionResult<PutSampleCommandResponse>> Put(PutSampleCommand command, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Send(command, cancellationToken);
         }
-        [HttpPatch]
+        [HttpPatch("{sampleid}")]
         public async Task<ActionResult<PatchSampleCommandResponse>> Patch(PatchSampleCommand command, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Send(command, cancellationToken);
         }
-        [HttpDelete]
+        [HttpDelete("{sampleid}")]
         public async Task<ActionResult<DeleteSampleCommandResponse>> Delete(DeleteSampleCommand command, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Send(command, cancellationToken);
