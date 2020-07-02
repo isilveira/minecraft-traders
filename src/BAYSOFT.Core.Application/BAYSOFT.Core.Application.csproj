@@ -19,7 +19,6 @@
     <Folder Include="MinecraftTraders\Items\Commands\" />
     <Folder Include="MinecraftTraders\Offers\Commands\" />
     <Folder Include="MinecraftTraders\ProfessionItems\Commands\" />
-    <Folder Include="MinecraftTraders\Professions\Commands\" />
   </ItemGroup>
 
 </Project>
