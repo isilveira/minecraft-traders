@@ -6,13 +6,13 @@ using System.Text;
 
 namespace BAYSOFT.Core.Application.MinecraftTraders.Accepts.Commands.PostAccept
 {
-    public class PostAcceptCommandResponse : ApplicationResponse<Villager>
+    public class PostAcceptCommandResponse : ApplicationResponse<Accept>
     {
         public PostAcceptCommandResponse()
         {
         }
 
-        public PostAcceptCommandResponse(WrapRequest<Villager> request, object data, string message = "Successful operation!", long? resultCount = null) : base(request, data, message, resultCount)
+        public PostAcceptCommandResponse(WrapRequest<Accept> request, object data, string message = "Successful operation!", long? resultCount = null) : base(request, data, message, resultCount)
         {
         }
     }
