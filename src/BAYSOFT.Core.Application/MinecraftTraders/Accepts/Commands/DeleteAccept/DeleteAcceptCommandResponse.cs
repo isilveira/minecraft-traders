@@ -6,13 +6,13 @@ using System.Text;
 
 namespace BAYSOFT.Core.Application.MinecraftTraders.Accepts.Commands.DeleteAccept
 {
-    public class DeleteAcceptCommandResponse : ApplicationResponse<Villager>
+    public class DeleteAcceptCommandResponse : ApplicationResponse<Accept>
     {
         public DeleteAcceptCommandResponse()
         {
         }
 
-        public DeleteAcceptCommandResponse(WrapRequest<Villager> request, object data, string message = "Successful operation!", long? resultCount = null) : base(request, data, message, resultCount)
+        public DeleteAcceptCommandResponse(WrapRequest<Accept> request, object data, string message = "Successful operation!", long? resultCount = null) : base(request, data, message, resultCount)
         {
         }
     }
