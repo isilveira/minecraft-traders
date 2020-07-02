@@ -15,9 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MinecraftTraders\Accepts\Commands\" />
-    <Folder Include="MinecraftTraders\Items\Commands\" />
-    <Folder Include="MinecraftTraders\Offers\Commands\" />
     <Folder Include="MinecraftTraders\ProfessionItems\Commands\" />
   </ItemGroup>
 
