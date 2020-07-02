@@ -1,8 +1,4 @@
 ﻿using BAYSOFT.Core.Domain.Entities.MinecraftTraders;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using BAYSOFT.Core.Application.MinecraftTraders.Villagers;
 
 namespace BAYSOFT.Core.Application.MinecraftTraders.Villagers.Commands.DeleteVillager
 {

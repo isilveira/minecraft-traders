@@ -1,9 +1,6 @@
 ﻿using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Contexts;
 using MediatR;
 using ModelWrapper.Extensions.Post;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

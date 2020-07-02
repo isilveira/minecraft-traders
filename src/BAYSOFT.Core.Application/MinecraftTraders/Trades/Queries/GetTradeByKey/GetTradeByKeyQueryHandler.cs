@@ -1,11 +1,11 @@
 ﻿using BAYSOFT.Core.Domain.Interfaces.Infrastructures.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using ModelWrapper.Extensions.Select;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ModelWrapper.Extensions.Select;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace BAYSOFT.Core.Application.MinecraftTraders.Trades.Queries.GetTradeByKey
 {

@@ -1,8 +1,5 @@
 ﻿using BAYSOFT.Core.Domain.Entities.MinecraftTraders;
 using ModelWrapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BAYSOFT.Core.Application.MinecraftTraders.Accepts.Queries.GetAcceptsByFilter
 {

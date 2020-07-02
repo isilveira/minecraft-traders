@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ModelWrapper.Extensions.FullSearch;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
