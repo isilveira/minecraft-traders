@@ -5,6 +5,7 @@ using ChanceNET;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ModelWrapper.Extensions.Select;
 using RomanNumerals;
 using Serilog;
 using System;
@@ -122,9 +123,12 @@ namespace BAYSOFT.Middleware
 
             var villagers = new List<Villager>();
 
-            var librarian = await context.Professions.Where(x => x.Name == "Librarian").SingleOrDefaultAsync(cancellationToken);
+            var librarian = await context.Professions
+                .Include(x => x.ProfessionItems).ThenInclude(x => x.Item)
+                .Where(x => x.Name.ToLower().Equals("librarian"))
+                .SingleOrDefaultAsync(cancellationToken);
 
-            villagers.Add(new Villager { Name = "Loja 01", Description = "Loja 01", ProfessionID = librarian.ProfessionID });
+            CreateVillagerLoja01(villagers, librarian);
             villagers.Add(new Villager { Name = "Loja 02", Description = "Loja 02", ProfessionID = librarian.ProfessionID });
             villagers.Add(new Villager { Name = "Loja 03", Description = "Loja 03", ProfessionID = librarian.ProfessionID });
             villagers.Add(new Villager { Name = "Loja 04", Description = "Loja 04", ProfessionID = librarian.ProfessionID });
@@ -162,6 +166,133 @@ namespace BAYSOFT.Middleware
 
             Log.Debug("Villager data seed completed.");
         }
+
+        private static void CreateVillagerLoja01(List<Villager> villagers, Profession librarian)
+        {
+            var loja01 = new Villager
+            {
+                Name = "Loja 01",
+                Description = "Loja 01",
+                ProfessionID = librarian.ProfessionID
+            };
+
+            var emerald = GetItemEmerald(librarian);
+            var paper = GetItemPaper(librarian);
+            var book = GetItemBook(librarian);
+            var looting_ii = GetItemEnchantedBookLootingII(librarian);
+            var fortune_i = GetItemEnchantedBookFortuneI(librarian);
+            var ink_sac = GetItemInkSac(librarian);
+            var glass = GetItemGlass(librarian);
+            var book_and_quill = GetItemBookAndQuill(librarian);
+            var protection_i = GetItemEnchantedBookProtectionI(librarian);
+            var name_tag = GetItemNameTag(librarian);
+
+            var nc1 = new Trade();
+            nc1.Accepts.Add(new Accept { Amount = 24, ItemID = paper.ItemID });
+            nc1.Offers.Add(new Offer { Amount = 1, ItemID = emerald.ItemID });
+            loja01.Trades.Add(nc1);
+
+            var nv1 = new Trade();
+            nv1.Accepts.Add(new Accept { Amount = 1, ItemID = book.ItemID });
+            nv1.Accepts.Add(new Accept { Amount = 23, ItemID = emerald.ItemID });
+            nv1.Offers.Add(new Offer { Amount = 1, ItemID = looting_ii.ItemID });
+            loja01.Trades.Add(nv1);
+
+            var nc2 = new Trade();
+            nc2.Accepts.Add(new Accept { Amount = 4, ItemID = book.ItemID });
+            nc2.Offers.Add(new Offer { Amount = 1, ItemID = emerald.ItemID });
+            loja01.Trades.Add(nc2);
+
+            var nv2 = new Trade();
+            nv2.Accepts.Add(new Accept { Amount = 18, ItemID = emerald.ItemID });
+            nv2.Accepts.Add(new Accept { Amount = 1, ItemID = book.ItemID });
+            nv2.Offers.Add(new Offer { Amount = 1, ItemID = fortune_i.ItemID });
+            loja01.Trades.Add(nv2);
+
+            var nc3 = new Trade();
+            nc3.Accepts.Add(new Accept { Amount = 5, ItemID = ink_sac.ItemID });
+            nc3.Offers.Add(new Offer { Amount = 1, ItemID = emerald.ItemID });
+            loja01.Trades.Add(nc3);
+
+            var nv3 = new Trade();
+            nv3.Accepts.Add(new Accept { Amount = 1, ItemID = emerald.ItemID });
+            nv3.Offers.Add(new Offer { Amount = 4, ItemID = glass.ItemID });
+            loja01.Trades.Add(nv3);
+
+            var nc4 = new Trade();
+            nc4.Accepts.Add(new Accept { Amount = 1, ItemID = book_and_quill.ItemID });
+            nc4.Offers.Add(new Offer { Amount = 1, ItemID = emerald.ItemID });
+            loja01.Trades.Add(nc4);
+
+            var nv4 = new Trade();
+            nv4.Accepts.Add(new Accept { Amount = 9, ItemID = emerald.ItemID });
+            nv4.Accepts.Add(new Accept { Amount = 1, ItemID = book.ItemID });
+            nv4.Offers.Add(new Offer { Amount = 1, ItemID = protection_i.ItemID });
+            loja01.Trades.Add(nv4);
+
+            var nc5 = new Trade();
+            nc5.Accepts.Add(new Accept { Amount = 20, ItemID = emerald.ItemID });
+            nc5.Offers.Add(new Offer { Amount = 1, ItemID = name_tag.ItemID });
+            loja01.Trades.Add(nc5);
+
+            villagers.Add(loja01);
+        }
+
+        private static Item GetItemNameTag(Profession librarian)
+        {
+            return GetItem(librarian, "name tag");
+        }
+
+        private static Item GetItemEnchantedBookProtectionI(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: protection i");
+        }
+
+        private static Item GetItemBookAndQuill(Profession librarian)
+        {
+            return GetItem(librarian, "book and quill");
+        }
+
+        private static Item GetItemGlass(Profession librarian)
+        {
+            return GetItem(librarian, "glass");
+        }
+
+        private static Item GetItemInkSac(Profession librarian)
+        {
+            return GetItem(librarian, "ink sac");
+        }
+
+        private static Item GetItemEnchantedBookFortuneI(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: fortune i");
+        }
+
+        private static Item GetItemEnchantedBookLootingII(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: looting II");
+        }
+
+        private static Item GetItemBook(Profession librarian)
+        {
+            return GetItem(librarian, "book");
+        }
+
+        private static Item GetItemPaper(Profession librarian)
+        {
+            return GetItem(librarian, "paper");
+        }
+
+        private static Item GetItemEmerald(Profession librarian)
+        {
+            return GetItem(librarian, "emerald");
+        }
+
+        private static Item GetItem(Profession librarian, string item)
+        {
+            return librarian.ProfessionItems.Select(x => x.Item).Where(x => x.Name.ToLower().Equals(item.ToLower())).SingleOrDefault();
+        }
+
         internal static async Task SeedItems(this IDefaultDbContext context, CancellationToken cancellationToken = default(CancellationToken))
         {
             var total = await context.Items.CountAsync(cancellationToken);
@@ -503,7 +634,6 @@ namespace BAYSOFT.Middleware
 
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "stick");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "gravel");
-            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "flint");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "string");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "feather");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "tripwire hook");
@@ -745,7 +875,6 @@ namespace BAYSOFT.Middleware
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather cap");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather boots");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather horse armor");
-            await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather cap");
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "saddle");
 
             await CreateProfessionItemAsync(context, cancellationToken, professionItems, "leather");
