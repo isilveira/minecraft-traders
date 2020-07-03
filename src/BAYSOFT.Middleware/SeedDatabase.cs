@@ -381,8 +381,6 @@ namespace BAYSOFT.Middleware
                 ProfessionID = librarian.ProfessionID
             };
 
-
-
             var emerald = GetItemEmerald(librarian);
             var paper = GetItemPaper(librarian);
             var book = GetItemBook(librarian);
@@ -399,6 +397,9 @@ namespace BAYSOFT.Middleware
             var blast_protection_iv = GetItemEnchantedBookBlastProtectionIV(librarian);
             var depth_strider_i = GetItemEnchantedBookDepthStriderI(librarian);
             var depth_strider_ii = GetItemEnchantedBookDepthStriderII(librarian);
+            var protection_i = GetItemEnchantedBookProtectionI(librarian);
+            var protection_ii = GetItemEnchantedBookProtectionII(librarian);
+            var protection_iii = GetItemEnchantedBookProtectionIII(librarian);
             var protection_iv = GetItemEnchantedBookProtectionIV(librarian);
             var fire_aspect_i = GetItemEnchantedBookFireAspectI(librarian);
             var feather_falling_i = GetItemEnchantedBookFeatherFallingI(librarian);
@@ -434,6 +435,59 @@ namespace BAYSOFT.Middleware
             var infinity_i = GetItemEnchantedBookInfinityI(librarian);
             var multishot_i = GetItemEnchantedBookMultishotI(librarian);
             var aqua_affinity_i = GetItemEnchantedBookAquaAffinityI(librarian);
+            var power_i = GetEnchantedBookPowerI(librarian);
+            var power_ii = GetEnchantedBookPowerII(librarian);
+            var power_iii = GetEnchantedBookPowerIII(librarian);
+            var power_iv = GetEnchantedBookPowerIV(librarian);
+            var power_v = GetEnchantedBookPowerV(librarian);
+
+            var nc1 = new Trade();
+            nc1.Accepts.Add(new Accept(24, paper));
+            nc1.Offers.Add(new Offer(1, emerald));
+            loja04.Trades.Add(nc1);
+
+            var nv1 = new Trade();
+            nv1.Accepts.Add(new Accept(6, emerald));
+            nv1.Offers.Add(new Offer(1, bookshelf));
+            loja04.Trades.Add(nv1);
+
+            var nc2 = new Trade();
+            nc2.Accepts.Add(new Accept(4, book));
+            nc2.Offers.Add(new Offer(1, emerald));
+            loja04.Trades.Add(nc2);
+
+            var nv2 = new Trade();
+            nv2.Accepts.Add(new Accept(54, emerald));
+            nv2.Accepts.Add(new Accept(1, book));
+            nv2.Offers.Add(new Offer(1, power_v));
+            loja04.Trades.Add(nv2);
+
+            var nc3 = new Trade();
+            nc3.Accepts.Add(new Accept(5, ink_sac));
+            nc3.Offers.Add(new Offer(1, emerald));
+            loja04.Trades.Add(nc3);
+
+            var nv3 = new Trade();
+            nv3.Accepts.Add(new Accept(11, emerald));
+            nv3.Accepts.Add(new Accept(1, book));
+            nv3.Offers.Add(new Offer(1, protection_iii));
+            loja04.Trades.Add(nv3);
+
+            //var nv4 = new Trade();
+            //nv4.Accepts.Add(new Accept(1, book_and_quill));
+            //nv4.Offers.Add(new Offer(1, emerald));
+            //loja04.Trades.Add(nv4);
+
+            //var nc4 = new Trade();
+            //nc4.Accepts.Add(new Accept(19, emerald));
+            //nc4.Accepts.Add(new Accept(1, book));
+            //nc4.Offers.Add(new Offer(1, silk_touch_i));
+            //loja04.Trades.Add(nc4);
+
+            //var nc5 = new Trade();
+            //nc5.Accepts.Add(new Accept(20, emerald));
+            //nc5.Offers.Add(new Offer(1, name_tag));
+            //loja04.Trades.Add(nc5);
 
             villagers.Add(loja04);
         }
@@ -1212,16 +1266,68 @@ namespace BAYSOFT.Middleware
                 ProfessionID = librarian.ProfessionID
             };
 
+
+
             var emerald = GetItemEmerald(librarian);
             var paper = GetItemPaper(librarian);
             var book = GetItemBook(librarian);
+            var bookshelf = GetItemBookshelf(librarian);
             var ink_sac = GetItemInkSac(librarian);
             var glass = GetItemGlass(librarian);
+            var lantern = GetItemLantern(librarian);
             var book_and_quill = GetItemBookAndQuill(librarian);
+            var clock = GetItemClock(librarian);
+            var compass = GetItemCompass(librarian);
             var name_tag = GetItemNameTag(librarian);
             var respiration_i = GetItemEnchantedBookRespirationII(librarian);
+            var respiration_iii = GetItemEnchantedBookRespirationIII(librarian);
             var blast_protection_iv = GetItemEnchantedBookBlastProtectionIV(librarian);
             var depth_strider_i = GetItemEnchantedBookDepthStriderI(librarian);
+            var depth_strider_ii = GetItemEnchantedBookDepthStriderII(librarian);
+            var protection_i = GetItemEnchantedBookProtectionI(librarian);
+            var protection_ii = GetItemEnchantedBookProtectionII(librarian);
+            var protection_iii = GetItemEnchantedBookProtectionIII(librarian);
+            var protection_iv = GetItemEnchantedBookProtectionIV(librarian);
+            var fire_aspect_i = GetItemEnchantedBookFireAspectI(librarian);
+            var feather_falling_i = GetItemEnchantedBookFeatherFallingI(librarian);
+            var feather_falling_ii = GetItemEnchantedBookFeatherFallingII(librarian);
+            var feather_falling_iii = GetItemEnchantedBookFeatherFallingIII(librarian);
+            var feather_falling_iv = GetItemEnchantedBookFeatherFallingIV(librarian);
+            var silk_touch_i = GetItemEnchantedBookSilkTouchI(librarian);
+            var fortune_ii = GetItemEnchantedBookFortuneII(librarian);
+            var fire_protection_i = GetItemEnchantedBookFireProtectionI(librarian);
+            var fire_protection_ii = GetItemEnchantedBookFireProtectionII(librarian);
+            var fire_protection_iii = GetItemEnchantedBookFireProtectionIII(librarian);
+            var fire_protection_iv = GetItemEnchantedBookFireProtectionIV(librarian);
+            var looting_i = GetItemEnchantedBookLootingI(librarian);
+            var looting_ii = GetItemEnchantedBookLootingII(librarian);
+            var looting_iii = GetItemEnchantedBookLootingIII(librarian);
+            var thorns_i = GetItemEnchantedBookThornsI(librarian);
+            var thorns_ii = GetItemEnchantedBookThornsII(librarian);
+            var thorns_iii = GetItemEnchantedBookThornsIII(librarian);
+            var sharpness_i = GetItemEnchantedBookSharpnessI(librarian);
+            var sharpness_ii = GetItemEnchantedBookSharpnessII(librarian);
+            var sharpness_iii = GetItemEnchantedBookSharpnessIII(librarian);
+            var sharpness_iv = GetItemEnchantedBookSharpnessIV(librarian);
+            var quick_charge_i = GetItemEnchantedBookQuickChargeI(librarian);
+            var quick_charge_ii = GetItemEnchantedBookQuickChargeII(librarian);
+            var quick_charge_iii = GetItemEnchantedBookQuickChargeIII(librarian);
+            var punch_i = GetItemEnchantedBookPunchI(librarian);
+            var punch_ii = GetItemEnchantedBookPunchII(librarian);
+            var piercing_i = GetItemEnchantedBookPiercingI(librarian);
+            var piercing_ii = GetItemEnchantedBookPiercingII(librarian);
+            var piercing_iii = GetItemEnchantedBookPiercingIII(librarian);
+            var piercing_iv = GetItemEnchantedBookPiercingIV(librarian);
+            var luck_of_the_sea_i = GetItemEnchantedBookLuckOfTheSeaI(librarian);
+            var luck_of_the_sea_ii = GetItemEnchantedBookLuckOfTheSeaII(librarian);
+            var infinity_i = GetItemEnchantedBookInfinityI(librarian);
+            var multishot_i = GetItemEnchantedBookMultishotI(librarian);
+            var aqua_affinity_i = GetItemEnchantedBookAquaAffinityI(librarian);
+            var power_i = GetEnchantedBookPowerI(librarian);
+            var power_ii = GetEnchantedBookPowerII(librarian);
+            var power_iii = GetEnchantedBookPowerIII(librarian);
+            var power_iv = GetEnchantedBookPowerIV(librarian);
+            var power_v = GetEnchantedBookPowerV(librarian);
 
             var nc1 = new Trade();
             nc1.Accepts.Add(new Accept(24, paper));
@@ -1240,9 +1346,8 @@ namespace BAYSOFT.Middleware
             loja16.Trades.Add(nc2);
 
             var nv2 = new Trade();
-            nv2.Accepts.Add(new Accept(38, emerald));
-            nv2.Accepts.Add(new Accept(1, book));
-            nv2.Offers.Add(new Offer(1, blast_protection_iv));
+            nv2.Accepts.Add(new Accept(1, emerald));
+            nv2.Offers.Add(new Offer(1, lantern));
             loja16.Trades.Add(nv2);
 
             var nc3 = new Trade();
@@ -1251,8 +1356,9 @@ namespace BAYSOFT.Middleware
             loja16.Trades.Add(nc3);
 
             var nv3 = new Trade();
-            nv3.Accepts.Add(new Accept(1, emerald));
-            nv3.Offers.Add(new Offer(4, glass));
+            nv3.Accepts.Add(new Accept(31, emerald));
+            nv3.Accepts.Add(new Accept(1, book));
+            nv3.Offers.Add(new Offer(4, feather_falling_iv));
             loja16.Trades.Add(nv3);
 
             var nv4 = new Trade();
@@ -1261,9 +1367,8 @@ namespace BAYSOFT.Middleware
             loja16.Trades.Add(nv4);
 
             var nc4 = new Trade();
-            nc4.Accepts.Add(new Accept(14, emerald));
-            nc4.Accepts.Add(new Accept(1, book));
-            nc4.Offers.Add(new Offer(1, depth_strider_i));
+            nc4.Accepts.Add(new Accept(4, emerald));
+            nc4.Offers.Add(new Offer(1, compass));
             loja16.Trades.Add(nc4);
 
             var nc5 = new Trade();
@@ -1823,6 +1928,26 @@ namespace BAYSOFT.Middleware
 
             villagers.Add(loja24);
         }
+        private static Item GetEnchantedBookPowerI(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: power i");
+        }
+        private static Item GetEnchantedBookPowerII(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: power ii");
+        }
+        private static Item GetEnchantedBookPowerIII(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: power iii");
+        }
+        private static Item GetEnchantedBookPowerIV(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: power iv");
+        }
+        private static Item GetEnchantedBookPowerV(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: power v");
+        }
         private static Item GetItemEnchantedBookMultishotI(Profession librarian)
         {
             return GetItem(librarian, "enchanted book: multishot i");
@@ -1878,6 +2003,10 @@ namespace BAYSOFT.Middleware
         private static Item GetItemEnchantedBookFeatherFallingIII(Profession librarian)
         {
             return GetItem(librarian, "enchanted book: feather falling iii");
+        }
+        private static Item GetItemEnchantedBookFeatherFallingIV(Profession librarian)
+        {
+            return GetItem(librarian, "enchanted book: feather falling iv");
         }
         private static Item GetItemEnchantedBookFireAspectI(Profession librarian)
         {
