@@ -12,5 +12,16 @@
         {
 
         }
+        public Offer(int amount, int itemID)
+        {
+            this.Amount = amount;
+            this.ItemID = itemID;
+        }
+
+        public Offer(int amount, Item item)
+        {
+            this.Amount = amount;
+            this.ItemID = item.ItemID;
+        }
     }
 }

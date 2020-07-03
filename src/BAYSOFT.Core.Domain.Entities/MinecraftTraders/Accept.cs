@@ -12,5 +12,16 @@
         {
 
         }
+
+        public Accept(int amount, int itemID)
+        {
+            Amount = amount;
+            ItemID = itemID;
+        }
+        public Accept(int amount, Item item)
+        {
+            Amount = amount;
+            ItemID = item.ItemID;
+        }
     }
 }
