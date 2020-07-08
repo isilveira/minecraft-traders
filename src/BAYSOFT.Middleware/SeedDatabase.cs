@@ -1387,6 +1387,7 @@ namespace BAYSOFT.Middleware
                 ProfessionID = librarian.ProfessionID
             };
 
+            #region Get Items from profession
             var emerald = GetItemEmerald(librarian);
             var paper = GetItemPaper(librarian);
             var book = GetItemBook(librarian);
@@ -1396,7 +1397,8 @@ namespace BAYSOFT.Middleware
             var piercing_iii = GetItemEnchantedBookPiercingIII(librarian);
             var piercing_iv = GetItemEnchantedBookPiercingIV(librarian);
             var luck_of_the_sea_ii = GetItemEnchantedBookLuckOfTheSeaII(librarian);
-            var infinity_i = GetItemEnchantedBookInfinityI(librarian);
+            var infinity_i = GetItemEnchantedBookInfinityI(librarian); 
+            #endregion
 
             var nc1 = new Trade();
             nc1.Accepts.Add(new Accept(24, paper));
